@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Waktu</title>
+    <link rel="stylesheet" href="waktu.css">
+</head>
+<body>
+    <!-- Untuk semua halaman: tombol home -->
+<button class="home-btn" onclick="window.location.href = 'beranda.html'">
+    🏠 Beranda
+</button>
+    <div class="container">
+        <header>
+            <h1>⏰ TimeMaster</h1>
+            <p class="subtitle">Kelola waktu Anda dengan lebih efektif</p>
+        </header>
+
+        <!-- Notification Permission -->
+        <div class="notification-permission">
+            <div class="permission-card">
+                <h3>🔔 Izinkan Notifikasi</h3>
+                <p>Aktifkan notifikasi untuk mendapatkan pengingat jadwal</p>
+                <button class="btn btn-primary" id="enableNotifications">Aktifkan Notifikasi</button>
+                <div class="permission-status" id="permissionStatus"></div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <div class="card">
+                <h3>🔄 Tugas Hari Ini</h3>
+                <div class="amount" id="todayTasks">0</div>
+            </div>
+            <div class="card">
+                <h3>✅ Tugas Selesai</h3>
+                <div class="amount" id="completedTasks">0</div>
+            </div>
+            <div class="card">
+                <h3>📊 Produktivitas</h3>
+                <div class="amount" id="productivityScore">0%</div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="schedule">📅 Jadwal</button>
+            <button class="tab-btn" data-tab="habits">🔄 Kebiasaan</button>
+            <button class="tab-btn" data-tab="tasks">📝 Tugas</button>
+            <button class="tab-btn" data-tab="analytics">📊 Analitik</button>
+        </div>
+
+        <!-- Schedule Tab -->
+        <div class="tab-content active" id="schedule">
+            <div class="section-header">
+                <h2>📅 Jadwal Harian/Mingguan</h2>
+                <button class="btn btn-primary" id="addScheduleBtn">Tambah Jadwal</button>
+            </div>
+
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="daily">Harian</button>
+                <button class="view-btn" data-view="weekly">Mingguan</button>
+            </div>
+
+            <!-- Daily View -->
+            <div class="schedule-view active" id="dailyView">
+                <div class="time-slots">
+                    <!-- Time slots will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Weekly View -->
+            <div class="schedule-view" id="weeklyView">
+                <div class="week-calendar">
+                    <!-- Week calendar will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Habits Tab -->
+        <div class="tab-content" id="habits">
+            <div class="section-header">
+                <h2>🔄 Tracking Kebiasaan</h2>
+                <button class="btn btn-primary" id="addHabitBtn">Tambah Kebiasaan</button>
+            </div>
+
+            <div class="habits-grid" id="habitsGrid">
+                <!-- Habits will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Tasks Tab -->
+        <div class="tab-content" id="tasks">
+            <div class="section-header">
+                <h2>📝 Manajemen Tugas</h2>
+                <button class="btn btn-primary" id="addTaskBtn">Tambah Tugas</button>
+            </div>
+
+            <div class="task-filters">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="pending">Belum Selesai</button>
+                <button class="filter-btn" data-filter="completed">Selesai</button>
+                <button class="filter-btn" data-filter="overdue">Terlambat</button>
+            </div>
+
+            <div class="tasks-list" id="tasksList">
+                <!-- Tasks will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div class="tab-content" id="analytics">
+            <div class="section-header">
+                <h2>📊 Analisis Produktivitas</h2>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3>📈 Tren Produktivitas</h3>
+                    <div class="chart-placeholder" id="productivityChart">
+                        <p>Grafik tren produktivitas 7 hari terakhir</p>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <h3>🎯 Kebiasaan Teratas</h3>
+                    <div id="topHabits">
+                        <!-- Top habits will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <h3>⏱️ Waktu Terbaik</h3>
+                    <div id="bestTime">
+                        <!-- Best time analysis will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Forms -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <h3>➕ Tambah Jadwal</h3>
+            <form id="scheduleForm">
+                <div class="form-group">
+                    <label for="scheduleTitle">Judul Kegiatan</label>
+                    <input type="text" id="scheduleTitle" placeholder="Contoh: Meeting Tim" required>
+                </div>
+                <div class="form-group">
+                    <label for="scheduleDate">Tanggal</label>
+                    <input type="date" id="scheduleDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="scheduleTime">Waktu</label>
+                    <input type="time" id="scheduleTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="scheduleDuration">Durasi (menit)</label>
+                    <input type="number" id="scheduleDuration" placeholder="60" required>
+                </div>
+                <div class="form-group">
+                    <label for="scheduleRepeat">Pengulangan</label>
+                    <select id="scheduleRepeat">
+                        <option value="none">Tidak Diulang</option>
+                        <option value="daily">Setiap Hari</option>
+                        <option value="weekly">Setiap Minggu</option>
+                        <option value="weekdays">Hari Kerja</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="scheduleReminder">Pengingat</label>
+                    <select id="scheduleReminder">
+                        <option value="0">Tidak Ada</option>
+                        <option value="5">5 Menit Sebelum</option>
+                        <option value="15">15 Menit Sebelum</option>
+                        <option value="30">30 Menit Sebelum</option>
+                        <option value="60">1 Jam Sebelum</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelSchedule">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="habitModal" class="modal">
+        <div class="modal-content">
+            <h3>➕ Tambah Kebiasaan</h3>
+            <form id="habitForm">
+                <div class="form-group">
+                    <label for="habitName">Nama Kebiasaan</label>
+                    <input type="text" id="habitName" placeholder="Contoh: Olahraga Pagi" required>
+                </div>
+                <div class="form-group">
+                    <label for="habitFrequency">Frekuensi</label>
+                    <select id="habitFrequency" required>
+                        <option value="daily">Setiap Hari</option>
+                        <option value="weekly">Mingguan</option>
+                        <option value="monthly">Bulanan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="habitGoal">Target</label>
+                    <input type="number" id="habitGoal" placeholder="Contoh: 5 kali per minggu" required>
+                </div>
+                <div class="form-group">
+                    <label for="habitReminder">Pengingat</label>
+                    <input type="time" id="habitReminder">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelHabit">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <h3>➕ Tambah Tugas</h3>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskTitle">Judul Tugas</label>
+                    <input type="text" id="taskTitle" placeholder="Contoh: Laporan Bulanan" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">Deskripsi</label>
+                    <textarea id="taskDescription" placeholder="Deskripsi tugas..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="taskPriority">Prioritas</label>
+                    <select id="taskPriority" required>
+                        <option value="low">Rendah</option>
+                        <option value="medium">Sedang</option>
+                        <option value="high">Tinggi</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskDueDate">Batas Waktu</label>
+                    <input type="datetime-local" id="taskDueDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskReminder">Pengingat</label>
+                    <select id="taskReminder">
+                        <option value="0">Tidak Ada</option>
+                        <option value="15">15 Menit Sebelum</option>
+                        <option value="60">1 Jam Sebelum</option>
+                        <option value="1440">1 Hari Sebelum</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelTask">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <h3 id="confirmationTitle">Konfirmasi</h3>
+            <p id="confirmationMessage">Apakah Anda yakin?</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="confirmNo">Batal</button>
+                <button class="btn btn-primary" id="confirmYes">Ya</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="waktu.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Pengingat Obat</title>
+    <link rel="stylesheet" href="obat.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <!-- Tambahkan di bagian atas container -->
+<div class="navigation">
+    <!-- Untuk semua halaman: tombol home -->
+<button class="home-btn" onclick="window.location.href = 'beranda.html'">
+    🏠 Beranda
+</button>
+</div>
+    <div class="container">
+        <header>
+            <h1>💊 Pengingat Obat</h1>
+            <p class="subtitle">Jadwal minum obat Anda yang teratur</p>
+        </header>
+
+        <div class="notification-permission">
+            <div class="permission-card">
+                <h3>🔔 Izinkan Notifikasi</h3>
+                <p>Aktifkan notifikasi untuk mendapatkan pengingat obat</p>
+                <button class="btn btn-primary" id="enableNotifications">Aktifkan Notifikasi</button>
+                <div class="permission-status" id="permissionStatus"></div>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="card">
+                <h3>Obat Hari Ini</h3>
+                <div class="amount" id="obatHariIni">0</div>
+            </div>
+            <div class="card">
+                <h3>Total Obat</h3>
+                <div class="amount" id="totalObat">0</div>
+            </div>
+            <div class="card">
+                <h3>Status Notifikasi</h3>
+                <div class="amount" id="statusNotif">Mati</div>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <h2>Tambah Jadwal Obat</h2>
+            <form id="medicineForm">
+                <div class="form-group">
+                    <label for="namaObat">Nama Obat</label>
+                    <input type="text" id="namaObat" placeholder="Contoh: Paracetamol" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dosis">Dosis</label>
+                    <input type="text" id="dosis" placeholder="Contoh: 1 tablet" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="waktu">Waktu Minum</label>
+                    <select id="waktu" required>
+                        <option value="">Pilih Waktu</option>
+                        <option value="pagi">Pagi (06:00)</option>
+                        <option value="siang">Siang (12:00)</option>
+                        <option value="sore">Sore (15:00)</option>
+                        <option value="malam">Malam (20:00)</option>
+                        <option value="custom">Waktu Kustom</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="customTimeGroup" style="display: none;">
+                    <label for="waktuKustom">Waktu Kustom</label>
+                    <input type="time" id="waktuKustom">
+                </div>
+
+                <div class="form-group">
+                    <label for="frekuensi">Frekuensi</label>
+                    <select id="frekuensi" required>
+                        <option value="">Pilih Frekuensi</option>
+                        <option value="sekali">Sekali Sehari</option>
+                        <option value="dua_kali">Dua Kali Sehari</option>
+                        <option value="tiga_kali">Tiga Kali Sehari</option>
+                        <option value="setiap_hari">Setiap Hari</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="keterangan">Keterangan</label>
+                    <textarea id="keterangan" placeholder="Catatan tambahan..." rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Tambah Jadwal</button>
+            </form>
+        </div>
+
+        <div class="table-section">
+            <h2>Jadwal Obat</h2>
+            <div class="filter-section">
+                <button class="btn-filter active" data-filter="semua">Semua</button>
+                <button class="btn-filter" data-filter="hari_ini">Hari Ini</button>
+                <button class="btn-filter" data-filter="aktif">Aktif</button>
+            </div>
+            
+            <div class="table-container">
+                <table id="medicineTable">
+                    <thead>
+                        <tr>
+                            <th>Nama Obat</th>
+                            <th>Waktu</th>
+                            <th>Dosis</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="medicineBody">
+                        <!-- Data obat akan dimasukkan di sini oleh JavaScript -->
+                    </tbody>
+                </table>
+                <div id="emptyState" class="empty-state">
+                    <p>Belum ada jadwal obat. Tambahkan jadwal pertama Anda!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="upcoming-section">
+            <h2>Pengingat Selanjutnya</h2>
+            <div id="upcomingReminders">
+                <!-- Daftar pengingat akan dimasukkan di sini -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <h3>Konfirmasi Minum Obat</h3>
+            <p id="modalMessage">Apakah Anda sudah minum obat?</p>
+            <div class="modal-actions">
+                <button class="btn btn-success" id="confirmTaken">Sudah Minum</button>
+                <button class="btn btn-secondary" id="snoozeReminder">Tunda 10 Menit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="obat.js"></script>
+</body>
+</html>

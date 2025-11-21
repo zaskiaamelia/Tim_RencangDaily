@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengeluaran Uang Pribadi</title>
+    <link rel="stylesheet" href="keuangan.css">
+</head>
+<body>
+     <!-- Tambahkan di bagian atas container -->
+<div class="navigation">
+    <!-- Untuk semua halaman: tombol home -->
+<button class="home-btn" onclick="window.location.href = 'beranda.html'">
+    🏠 Beranda
+</button>
+    <div class="container">
+
+        <!-- kotak pertama -->
+        <header>
+            <h1>Pengeluaran Uang Pribadi</h1>
+            <p>Kelola keuangan Anda dengan lebih baik</p>
+        </header>
+        
+        <!-- kotak 2-4 -->
+        <div class="summary">
+
+            <!-- kotak 2 -->
+            <div class="summary-card">
+                <h3>Saldo</h3>
+                <p class="saldo" id="saldo">Rp 0</p>
+            </div>
+
+            <!-- kotak 3 -->
+            <div class="summary-card">
+                <h3>Total Pengeluaran</h3>
+                <p class="pengeluaran" id="total-pengeluaran">Rp 0</p>
+            </div>
+
+            <!-- kotak 4 -->
+            <div class="summary-card">
+                <h3>Pengeluaran Bulan Ini</h3>
+                <p class="pengeluaran" id="pengeluaran-bulan-ini">Rp 0</p>
+            </div>
+        </div>
+        
+        <!-- bagian pengeluaran -->
+        <div class="form-container">
+            <h2>Tambah Pengeluaran Baru</h2>
+
+            <!-- nama pengeluaran dll -->
+            <form id="expense-form">
+                <!-- pengeluaran -->
+                <div class="form-group">
+                    <label for="expense-name">Nama Pengeluaran</label>
+                    <input type="text" id="expense-name" placeholder="Contoh: Beli Makan Siang" required>
+                </div>
+
+                <!-- jumlah -->
+                <div class="form-group">
+                    <label for="expense-amount">Jumlah (Rp)</label>
+                    <input type="number" id="expense-amount" placeholder="Contoh: 50000" min="1" required>
+                </div>
+                <!-- kategori -->
+                <div class="form-group">
+                    <label for="expense-category">Kategori</label>
+                    <select id="expense-category" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="Makanan">Makanan</option>
+                        <option value="Transportasi">Transportasi</option>
+                        <option value="Hiburan">Hiburan</option>
+                        <option value="Tagihan">Tagihan</option>
+                        <option value="Belanja">Belanja</option>
+                        <option value="Kesehatan">Kesehatan</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <!-- tanggal -->
+                <div class="form-group">
+                    <label for="expense-date">Tanggal</label>
+                    <input type="date" id="expense-date" required>
+                </div>
+                <!-- catatan -->
+                <div class="form-group">
+                    <label for="expense-notes">Catatan (Opsional)</label>
+                    <textarea id="expense-notes" placeholder="Tambahkan catatan jika perlu"></textarea>
+                </div>
+                <!-- kotak tambah pengeluaran -->
+                <button type="submit">Tambah Pengeluaran</button>
+            </form>
+        </div>
+        
+        <!-- bagain filter keluaran -->
+        <div class="filter-container">
+            <h2>Filter Pengeluaran</h2>
+            <!-- kotak kategori dan bulan -->
+            <div class="filter-controls">
+                <!-- kategori mknn dll -->
+                <div class="filter-group">
+                    <label for="filter-category">Kategori:</label>
+                    <select id="filter-category">
+                        <option value="">Semua Kategori</option>
+                        <option value="Makanan">Makanan</option>
+                        <option value="Transportasi">Transportasi</option>
+                        <option value="Hiburan">Hiburan</option>
+                        <option value="Tagihan">Tagihan</option>
+                        <option value="Belanja">Belanja</option>
+                        <option value="Kesehatan">Kesehatan</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <!-- bagian bulan -->
+                <div class="filter-group">
+                    <label for="filter-month">Bulan:</label>
+                    <select id="filter-month">
+                        <option value="">Semua Bulan</option>
+                        <option value="0">Januari</option>
+                        <option value="1">Februari</option>
+                        <option value="2">Maret</option>
+                        <option value="3">April</option>
+                        <option value="4">Mei</option>
+                        <option value="5">Juni</option>
+                        <option value="6">Juli</option>
+                        <option value="7">Agustus</option>
+                        <option value="8">September</option>
+                        <option value="9">Oktober</option>
+                        <option value="10">November</option>
+                        <option value="11">Desember</option>
+                    </select>
+                </div>
+                <!-- tombol reset -->
+                <button id="reset-filter">Reset Filter</button>
+            </div>
+        </div>
+        <!-- daftar pengeluaran -->
+        <div class="expense-list">
+            <!-- bagian pengeluaran -->
+            <div class="expense-header">
+                <h2>Daftar Pengeluaran</h2>
+                <button id="delete-all" class="delete-all-btn">Hapus Semua</button>
+            </div>
+            <!-- bagian hasil pengeluaran -->
+            <div id="expenses-container">
+                <div class="no-expenses" id="no-expenses">
+                    Belum ada pengeluaran. Tambahkan pengeluaran pertama Anda!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="keuangan.js"></script>
+</body>
+</html>
